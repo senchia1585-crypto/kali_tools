@@ -1,0 +1,79 @@
+# --- 管理后台 ---
+admin
+administrator
+admin_panel
+dashboard
+panel
+manage
+control
+backend
+
+# --- 登录与认证 ---
+login
+signin
+auth
+register
+signup
+user
+account
+forgot-password
+
+# --- 配置文件与敏感信息 ---
+config
+settings
+setup
+.env
+.git
+.svn
+.htaccess
+robots.txt
+sitemap.xml
+phpinfo.php
+info.php
+
+# --- 数据库管理 ---
+phpmyadmin
+myadmin
+pma
+db
+database
+sql
+backup.sql
+db.sql
+
+# --- 备份文件 ---
+backup
+backups
+old
+temp
+tmp
+archive
+test
+dev
+staging
+
+# --- 文件上传与资源 ---
+uploads
+upload
+files
+assets
+images
+img
+js
+css
+static
+media
+
+# --- 常见 CMS (如 WordPress) ---
+wp-admin
+wp-content
+wp-includes
+wp-login.php
+xmlrpc.php
+
+# --- API 接口 ---
+api
+v1
+v2
+rest
+graphql
