@@ -1,0 +1,130 @@
+# ==========================================
+# KALI_TOOLS 实战扫描字典 V2.0
+# 整合：管理后台、敏感配置、云原生、备份、API
+# ==========================================
+
+# --- [1] 管理后台与控制面板 ---
+admin
+administrator
+admin_panel
+admin_login
+dashboard
+panel
+manage
+control
+backend
+system_admin
+auth/admin
+
+# --- [2] 登录、认证与用户管理 ---
+login
+signin
+auth
+register
+signup
+user
+account
+forgot-password
+profile
+members
+
+# --- [3] 核心配置文件 (高价值！) ---
+.env
+.env.local
+.env.production
+.env.bak
+config
+settings
+setup
+.git/config
+.git/index
+.svn/entries
+.htaccess
+robots.txt
+sitemap.xml
+web.config
+package.json
+composer.json
+
+# --- [4] 敏感信息泄露 (一击必杀) ---
+phpinfo.php
+info.php
+test.php
+.bash_history
+.ssh/id_rsa
+.vscode/settings.json
+.idea/workspace.xml
+.DS_Store
+error.log
+access.log
+debug.log
+
+# --- [5] 数据库管理与 SQL 导出 ---
+phpmyadmin
+myadmin
+pma
+db
+database
+sql
+backup.sql
+db.sql
+dump.sql
+data.sql
+
+# --- [6] 备份文件与临时文件 (程序员最爱留的) ---
+backup
+backups
+old
+temp
+tmp
+archive
+test
+dev
+staging
+www.zip
+web.zip
+code.zip
+backup.zip
+site.zip
+index.php.bak
+config.php.old
+
+# --- [7] 云原生、Docker 与 DevOps ---
+.aws/credentials
+.docker/config.json
+docker-compose.yml
+Dockerfile
+.kube/config
+actuator/health
+actuator/env
+heapdump
+
+# --- [8] 文件上传与资源目录 ---
+uploads
+upload
+files
+assets
+images
+img
+js
+css
+static
+media
+download
+
+# --- [9] 常见 CMS (WordPress 等) ---
+wp-admin
+wp-content
+wp-includes
+wp-login.php
+xmlrpc.php
+
+# --- [10] 现代 API 接口与文档 ---
+api
+v1
+v2
+rest
+graphql
+swagger-ui.html
+api-docs
+docs
