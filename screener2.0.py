@@ -31,17 +31,21 @@ while True:
                  try: # second tryhave to inside in second for so that it can be detect
                   print(f"try to screnning..... : {aim}",end="\r")
                   t.sleep(random.uniform(0.1,0.6))
-                  time=t.localtime()
-                  print(f"{time.tm_hour}:{time.tm_min}:{time.tm_sec}--->try to screening: {aim}",end="\r")
-                  answer=r.get(aim , headers=header, timeout=5, allow_redirects=False) # if false will not follow again ! # get with headers so that let u become a human
+                  #time=t.localtime()
+                  #print(f"[INFO!!]: {time.tm_hour}:{time.tm_min}:{time.tm_sec}--->try to screening: {aim}")
+                  answer=r.get(aim , headers=header, timeout=10, allow_redirects=False) # if false will not follow again ! # get with headers so that let u become a human
+                  #if TimeoutError or r.exceptions.RequestException:
+                     #print(f"pls check ur network or target may have problem:\n{TimeoutError}\n{r.exceptions.RequestException}")
                   if answer.status_code==200:
                      print(f"[+ success ! ]found: \n{aim}\n")
                      print(f"content:\n{answer.text[:80].strip()}---")# write down only 80 word to file!
+                     time=t.localtime()
+                     print(f"\n{time.tm_hour}:{time.tm_min}:{time.tm_sec}--->try to screening: {aim}")
                      try: 
                         with open("answer.txt","a",encoding="utf-8") as wr:
                            print(f"[+ success]found!:\n{path}")
-                           wr.write(f"态状 status找到!found:\n{aim}")
-                           wr.write(f"{answer.text[:80].strip()}") # try to save 80 word to file!
+                           wr.write(f"\n态状 status找到!found:\n{aim}")
+                           wr.write(f"\nyour path:\n{path}\n.Your content:\n{answer.text[:80].strip()}") # try to save 80 word to file!
                      except Exception as e1:
                         print(f"[fail ! pls check]\n:{e1}")
                   elif answer.status_code ==403:
@@ -58,12 +62,10 @@ while True:
                      print("ip may refuse connection pls wait for 10s ...")
                      t.sleep(10)
                   elif answer.status_code==401:
-                     print(f"{answer.status_code}\n发现好料!:\n{aim}")
-                     with open("answer.txt","a",encoding="utf-8") as ww:
-                        ww.write(f"[401!]:\n{aim}")
+                     print(f"{answer.status_code}\n发现好料!但要认证!:\n{aim}")
                      try:
                            with open("answer.txt","a",encoding="utf-8") as wr3:
-                            print(f"写入!:{aim}")
+                            print(f"写入!但要认证!:{aim}")
                             wr3.write(f"{aim}")
                      except Exception as e2:
                         print(f"{e2}")
@@ -72,13 +74,14 @@ while True:
                   elif answer.status_code==500:
                      print(f"[!!!有问题]\n{answer.status_code}")
                   else: # 404
-                     pass
+                     pass # if 404 not found will pass not come out a lot of word!
                  except Exception as get_wrong:
-                  print(f"pls check\n:{get_wrong}")
+                  print(f"pls check \n:{get_wrong}")
         except Exception as e_final:
            print(f"may have problem!!\n{e_final}")
         except FileNotFoundError as no_found:
            print(f"cannot find the file!{no_found}")
+
 print(f"screen finish! pls check!---->answer.txt or check ur code and try again !")
                        
 
