@@ -29,8 +29,8 @@ while True:
                  aim=f"{target.rstrip('/')}/{path.lstrip('/')}" # auto settle /  ex:rstrp--->google.com//... cut ///  lstrip-->///google.com cut /one
                  header={f"User-agent":random.choice(id_list)} # random to choice one of the ip
                  try: # second tryhave to inside in second for so that it can be detect
-                  print(f"try to screnning..... : {aim}",end="\r")
-                  t.sleep(random.uniform(0.1,0.6))
+                  print(f"try to screnning..... : {aim}" + " "*10,end="\r")
+                  t.sleep(random.uniform(2.5,5.5)) # random sleep for 2.0 to 3.5s to make u more like a human
                   #time=t.localtime()
                   #print(f"[INFO!!]: {time.tm_hour}:{time.tm_min}:{time.tm_sec}--->try to screening: {aim}")
                   answer=r.get(aim , headers=header, timeout=10, allow_redirects=False) # if false will not follow again ! # get with headers so that let u become a human
@@ -50,7 +50,10 @@ while True:
                         print(f"[fail ! pls check]\n:{e1}")
                   elif answer.status_code ==403:
                      print(f"{answer.status_code}\n没权限!")
-                     print(f"To:{target}")    
+                     print(f"To:{target}") 
+                     with open("answer.txt","a",encoding="utf-8") as wr2:
+                            print(f"写入!:路径:\n{aim}")
+                            wr2.write(f"{aim}\n")   
                      try:
                            with open("answer.txt","a",encoding="utf-8") as wr2:
                             print(f"写入!:路径:\n{aim}")
@@ -63,6 +66,9 @@ while True:
                      t.sleep(10)
                   elif answer.status_code==401:
                      print(f"{answer.status_code}\n发现好料!但要认证!:\n{aim}")
+                     with open("answer.txt","a",encoding="utf-8") as wr3:
+                            print(f"写入!但要认证!:{aim}")
+                            wr3.write(f"{aim}")
                      try:
                            with open("answer.txt","a",encoding="utf-8") as wr3:
                             print(f"写入!但要认证!:{aim}")
