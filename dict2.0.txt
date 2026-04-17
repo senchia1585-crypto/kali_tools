@@ -5,6 +5,7 @@
 
 # --- [1] 管理后台与控制面板 ---
 admin
+Admin
 administrator
 admin_panel
 admin_login
@@ -15,6 +16,20 @@ control
 backend
 system_admin
 auth/admin
+#-- special ---
+auth/login-admin
+auth/admin-login
+auth/login_admin
+auth/admin_login
+#--- some company will using this path !
+backup.sql.bak
+# -- maybe have to mannually! to test but dont using script to do acttrack ex:(ddos)
+.sql.old
+.sql.zip
+sql.tar.gz
+.sql~
+.save
+
 
 # --- [2] 登录、认证与用户管理 ---
 login
@@ -128,3 +143,7 @@ graphql
 swagger-ui.html
 api-docs
 docs
+#---config后面好料---
+config.php.bak 
+config.php.old 
+config.php.save
