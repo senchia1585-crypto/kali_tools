@@ -45,22 +45,34 @@ id_list = [
     # DuckDuckGo Privacy Browser
     "Mozilla/5.0 (Linux; Android 12) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.6099.144 Mobile Safari/537.36 DuckDuckGo/5"
 ]
-maxi_threads=thr.Semaphore(10) # set the max thread to 10 to avoid too much thread at the same time and then it can be more like a human and avoid too much thread at the same time
+#这一堆 Header 是为了骗服务器：我不是外网访客，我是你自家人（127.0.0.1）
+bypass_headers= {
+     "User-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36", #for space
+    "X-Forwarded-For": "127.0.0.1",    # 核心：伪造转发来源
+    "X-Originating-IP": "127.0.0.1",   # 核心：伪造原始 IP
+    "X-Remote-IP": "127.0.0.1",        # 核心：伪造远程 IP
+    "X-Client-IP": "127.0.0.1",        # 核心：伪造客户端 IP
+    "X-Forwarded-Host": "127.0.0.1" # 核心：伪造转发主机
+           }
+
+# 在你原本的 requests.get 里面，把 headers 换成这个
+# 比如：answer = r.get(aim, headers=bypass_headers, timeout=10)}
+maxi_threads=thr.Semaphore(3) # set the max thread to 10 to avoid too much thread at the same time and then it can be more like a human and avoid too much thread at the same time
 number_429=0 # if 429 more than 3 times then break the loop and stop the scan ! or add more time to sleep
-def muti_scan(aim,header,path): # path is second to read the inside path make staff understand path contain the path to let staff screnning with knowing path
+def muti_scan(aim,pass_header,path): # path is second to read the inside path make staff understand path contain the path to let staff screnning with knowing path
      # def the muti_scan function for muti_threading use def because many staff will follow below instruction and then it can be more like a human and avoid too much thread at the same time
     global number_429 # if 429 more than 3 times then break the loop and stop the scan ! or add more time to sleep # make staff now 429
     try:
         with maxi_threads: # only 10 satff get in this code at the same time to avoid too much thread at the same time and then it can be more like a human and avoid too much thread at the same time
-            answer=r.get(aim, headers=header, timeout=15, allow_redirects=False) 
-            print(f"try to screnning..... : {aim}" + " "*10,end="\r")
+            answer=r.get(aim, headers=pass_header, timeout=15, allow_redirects=False) 
+            print(f"try to screnning--->: {aim}" + " "*10,end="\r")
             t.sleep(rd.uniform(5,8)) # random sleep if more sensitive path ex:env git admin add the time above 10s   to make u more like a human
             if answer.status_code==200:
-                print(f"[success!!! check the file]:\n{aim}\n")
+                print(f"[success!!! check the file]--->:{aim}") # dont \n because here means that it will print next line dict!
                 with open("answer.txt","a",encoding="utf-8") as w1:
                     print(f"try to write the answer in txt document写入txt中: {aim}\n")
                     time=t.localtime()
-                    print(f"\n{time.tm_hour}:{time.tm_min}:{time.tm_sec}--->try to screening: {aim}")
+                    print(f"\n{time.tm_hour}:{time.tm_min}:{time.tm_sec}--->try to saving this path---->: {aim}")
                     w1.write(f"[+ Found! ]: {aim}\n")
                     w1.write(f"content:\n{answer.text[:400].strip()}---\n") # write down only 400 word to file!
             elif answer.status_code==403:
@@ -114,6 +126,7 @@ if __name__=="__main__": #run this code fist to avoid the problem of muti_thread
                     you have to manually check the content of the path or file to confirm whether it is useful or not!
                     Manually dig for vulnerability! 需要手动挖漏洞！
                     """)
+                #use the different agent follow situation
                 header={f"User-agent":rd.choice(id_list)} # random to choice one of the ip #here header make coding remember to use it in muti_scan function ! and then it can be used in muti_scan function for get request ! and then it can be more like a human and avoid too much thread at the same time
                 target=input("Pls enter ur target[enter '0' to leave]:\n").strip()
                 if target.strip()=='0':
@@ -133,8 +146,15 @@ if __name__=="__main__": #run this code fist to avoid the problem of muti_thread
                                 if number_429>=3: # if 429 more than 3 times then break the loop and stop the scan ! # main announcement for 429 
                                     print(f"pls check ur network or target may have problem:\n{number_429} times 429了!") 
                                     break # if 429 more than 3 times then break the loop and stop the scan !
+                                pass_header=bypass_headers.copy()# copy fake header server to staff   
+                                pass_header["User-agent"]=rd.choice(id_list) # here user-agent is choice x-forwarded-for x-originating-ip x-remote-ip x-client-ip x-forwarded-host is all the same to make it more like a human and avoid too much thread at the same time
+                                 # ex:
+                                 # x-forwarded-for: 127.0.0.1 : Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36
+                                 # x-originating-ip: 127.0.0.1 : Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36 
+                                # here user-agent is choice x-forwarded-for x-originating-ip x-remote-ip x-client-ip x-forwarded-host is all the same to make it more like a human and avoid too much thread at the same time
+                                 # here user-agent is choice x-forwarded-for x-originating-ip x-remote-ip 
                                 aim=f"{target.rstrip('/')}/{path.lstrip('/')}"
-                                thread=thr.Thread(target=muti_scan, args=(aim,header,path)) # arg is a tuple so that it can be run by muti_scan and it will continue run until all path is scaned !
+                                thread=thr.Thread(target=muti_scan, args=(aim,pass_header,path)) # arg is a tuple so that it can be run by muti_scan and it will continue run until all path is scaned !
                                 thread.daemon=True # set the thread as daemon # auto exit!
                                 thread.start() # start the thread and sleep for a while to make it more like a human and avoid too much thread at the same time
                                 t.sleep(rd.uniform(3,5)) # sleep for a while to make it more like a # this time for staff
